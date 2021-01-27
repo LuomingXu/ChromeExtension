@@ -1,3 +1,16 @@
+var addEvent = (function () {
+    if (window.addEventListener) {
+        return function (elm, type, handle) {
+            elm.addEventListener(type, handle, false);
+        }
+    }
+    if (window.attachEvent) {
+        return function (elm, type, handle) {
+            elm.attachEvent('on' + type, handle);
+        }
+    }
+})();
+
 var getLinks = function () {
     var header, tag, headerLevelStr, depth;
     var headers = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6');
@@ -102,11 +115,20 @@ if (isGen() && typeof links !== 'undefined' && links.length !== 0 && typeof docu
 }
 
 // 解决滚动条会自动复原的问题
+var toc_ul = document.getElementsByClassName("toc__ul")[0]
+addEvent(toc_ul, 'scroll', function () {
+    window.localStorage.setItem("toc_scroll_top", toc_ul.scrollTop);
+    console.log(toc_ul.scrollTop)
+});
+
 var tartget = window.location.href.split('#')[1];
 if (tartget != undefined) {
     var element = document.getElementById(`toc_line_#${tartget}`);
     if (element != undefined && element != null) {
-        var toc_ul = document.getElementsByClassName("toc__ul")[0]
-        toc_ul.scrollTo(0, toc_ul.offsetTop - element.offsetHeight);
+        var scrollTop = window.localStorage.getItem("toc_scroll_top");
+
+        if (scrollTop != null) {
+            toc_ul.scrollTo(0, scrollTop) // scroll to remembered position
+        }
     }
 }
