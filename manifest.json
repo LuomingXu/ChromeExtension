@@ -1,21 +1,35 @@
 {
     "manifest_version": 2,
-	"name": "MyOwnExtension",
-	"version": "1.0",
-    "description": "重定义新建标签页, 添加百度搜索的右键菜单",
-    "permissions":["contextMenus", "tabs"],
-    "background":
-    {
-        "scripts":["script.js"]
+    "name": "MyOwnExtension",
+    "version": "1.0",
+    "description": "添加百度搜索的右键菜单, GitHub Readme TOC",
+    "permissions": [
+        "contextMenus",
+        "tabs",
+        "webNavigation", 
+        "*://*.github.com/*"
+    ],
+    "background": {
+        "scripts": [
+            "src/background.js"
+        ]
     },
-    "icons":
-    {
+    "icons": {
         "16": "imgs/icon.png",
         "48": "imgs/icon.png",
         "128": "imgs/icon.png"
     },
-    "chrome_url_overrides": 
-    {
-        "newtab": "popup.html"
-    }  
+    "content_scripts": [
+        {
+            "css": [
+                "style.css"
+            ],
+            "js": [
+                "src/main.js"
+            ],
+            "matches": [
+                "*://*.github.com/*"
+            ]
+        }
+    ]
 }
