@@ -4,11 +4,13 @@ chrome.contextMenus.create({
     onclick: baidu
 });
 function baidu(info, tab) {
+    console.log("exist")
     var url = "https://www.baidu.com/s?wd=" + info['selectionText'] + "";
     chrome.tabs.create({
         url: url
     });
 }
+
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(
     function () {
