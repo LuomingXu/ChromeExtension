@@ -5,7 +5,6 @@
     "description": "添加百度搜索的右键菜单, GitHub Readme TOC",
     "permissions": [
         "contextMenus",
-        "tabs",
         "webNavigation", 
         "*://*.github.com/*"
     ],

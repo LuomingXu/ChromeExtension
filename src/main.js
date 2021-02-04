@@ -118,7 +118,6 @@ if (isGen() && typeof links !== 'undefined' && links.length !== 0 && typeof docu
 var toc_ul = document.getElementsByClassName("toc__ul")[0]
 addEvent(toc_ul, 'scroll', function () {
     window.localStorage.setItem("toc_scroll_top", toc_ul.scrollTop);
-    console.log(toc_ul.scrollTop)
 });
 
 var tartget = window.location.href.split('#')[1];
