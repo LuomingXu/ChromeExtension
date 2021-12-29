@@ -1,8 +1,10 @@
 Chrome Extension
 =
 
+[![image](.github/chrome.png)](https://chrome.google.com/webstore/detail/myownextension/dgpghnnkpmpiekgmcfjgpgeofhemodoj)
+
 - search by baidu
-- github.com show hover TOC
+- github.com hover TOC
 
 #### Thanks
 
