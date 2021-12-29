@@ -79,7 +79,8 @@ var buildContents = function (links) {
 
         currentDepth = node.depth;
 
-        contents += '<li class="toc__lineDepth-' + currentDepth + '"><a title="' + node.text + '" href="' + node.hash + '">' + node.text + '</a></li>';
+        // 相较原版加了id=toc_line_, 为了后面的滚动条复原问题
+        contents += `<li id="toc_line_${node.hash}" class="toc__lineDepth-${currentDepth}"><a title="${node.text}" href="${node.hash}">${node.text}</a></li>`;
     }
 
     while (currentDepth--) {
