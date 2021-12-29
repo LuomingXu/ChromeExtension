@@ -79,7 +79,7 @@ var buildContents = function (links) {
 
         currentDepth = node.depth;
 
-        contents += `<li id="toc_line_${node.hash}" class="toc__lineDepth-${currentDepth}"><a title="${node.text}" href="${node.hash}">${node.text}</a></li>`;
+        contents += '<li class="toc__lineDepth-' + currentDepth + '"><a title="' + node.text + '" href="' + node.hash + '">' + node.text + '</a></li>';
     }
 
     while (currentDepth--) {
@@ -89,7 +89,7 @@ var buildContents = function (links) {
     return contents;
 };
 
-var section = document.getElementsByClassName('flex-shrink-0 col-12 col-md-3');
+var section = document.getElementsByClassName('Layout-sidebar'); // 右侧边栏, 根据class查找
 var toc = document.createElement("div");
 toc.className = "toc toc__row";
 console.log("section: ", section);
