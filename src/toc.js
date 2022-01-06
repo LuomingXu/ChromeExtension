@@ -90,45 +90,55 @@ var buildContents = function (links) {
     return contents;
 };
 
-var section = document.getElementsByClassName('Layout-sidebar'); // 右侧边栏, 根据class查找
-var toc = document.createElement("div");
-toc.className = "toc toc__row";
-console.log("section: ", section);
-var links;
 
-// https://github.com/$USERNAME下, 因为github, 有首页readme, 所以需要剔除, 不显示toc
-var isGen = function () {
-    var arr = window.location.href.split('/');
-    if (arr[4] != undefined) {
-        return true;
+function doFunc_toc() {
+    var section = document.getElementsByClassName('Layout-sidebar'); // 右侧边栏, 根据class查找
+    var toc = document.createElement("div");
+    toc.className = "toc toc__row";
+    console.log("section: ", section);
+
+    if (section.length <= 0) {
+        return
     }
 
-    return false;
-}
+    var links;
 
-if (typeof (section[0]) != 'undefined' && section[0] != null) {
-    section[0].appendChild(toc);
-    links = getLinks();
-}
+    // https://github.com/$USERNAME下, 因为github, 有首页readme, 所以需要剔除, 不显示toc
+    var isGen = function () {
+        var arr = window.location.href.split('/');
+        if (arr[4] != undefined) {
+            return true;
+        }
 
-if (isGen() && typeof links !== 'undefined' && links.length !== 0 && typeof document.getElementsByClassName("toc")[0] !== 'undefined') {
-    document.getElementsByClassName("toc")[0].innerHTML = "<div class='Box-header toc__header'><h2 class='Box-title toc_title'>Table Of Contents</h2></div>" + buildContents(links)
-}
+        return false;
+    }
 
-// 解决滚动条会自动复原的问题
-var toc_ul = document.getElementsByClassName("toc__ul")[0]
-addEvent(toc_ul, 'scroll', function () {
-    window.localStorage.setItem("toc_scroll_top", toc_ul.scrollTop);
-});
+    if (typeof (section[0]) != 'undefined' && section[0] != null) {
+        section[0].appendChild(toc);
+        links = getLinks();
+    }
 
-var tartget = window.location.href.split('#')[1];
-if (tartget != undefined) {
-    var element = document.getElementById(`toc_line_#${tartget}`);
-    if (element != undefined && element != null) {
-        var scrollTop = window.localStorage.getItem("toc_scroll_top");
+    if (isGen() && typeof links !== 'undefined' && links.length !== 0 && typeof document.getElementsByClassName("toc")[0] !== 'undefined') {
+        document.getElementsByClassName("toc")[0].innerHTML = "<div class='Box-header toc__header'><h2 class='Box-title toc_title'>Table Of Contents</h2></div>" + buildContents(links)
+    }
 
-        if (scrollTop != null) {
-            toc_ul.scrollTo(0, scrollTop) // scroll to remembered position
+    // 解决滚动条会自动复原的问题
+    var toc_ul = document.getElementsByClassName("toc__ul")[0]
+    addEvent(toc_ul, 'scroll', function () {
+        window.localStorage.setItem("toc_scroll_top", toc_ul.scrollTop);
+    });
+
+    var tartget = window.location.href.split('#')[1];
+    if (tartget != undefined) {
+        var element = document.getElementById(`toc_line_#${tartget}`);
+        if (element != undefined && element != null) {
+            var scrollTop = window.localStorage.getItem("toc_scroll_top");
+
+            if (scrollTop != null) {
+                toc_ul.scrollTo(0, scrollTop) // scroll to remembered position
+            }
         }
     }
 }
+
+doFunc_toc()
