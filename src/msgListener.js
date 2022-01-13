@@ -7,13 +7,11 @@ chrome.runtime.onMessage.addListener(
         // }
 
         if (msg.code === 'github' && msg.event === 'onHistoryStateUpdated') {
-            if (msg.count % 2 == 0) { // 点击了之后此事件会执行两次, 第二次才是跳转后的页面
-                // relative time -> ISO time
-                doFunc_timeChange()
+            // relative time -> ISO time
+            doFunc_timeChange()
 
-                // GitHub Toc
-                doFunc_toc()
-            }
+            // GitHub Toc
+            doFunc_toc()
         }
     }
 );

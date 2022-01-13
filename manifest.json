@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "MyOwnExtension",
-    "version": "1.4",
+    "version": "1.5",
     "description": "添加百度搜索的右键菜单, GitHub Readme TOC / Relative time -> ISO time",
     "permissions": [
         "contextMenus",
