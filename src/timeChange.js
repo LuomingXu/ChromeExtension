@@ -35,11 +35,8 @@ function doFunc_timeChange() {
     chrome.storage.sync.get({
         timeChange: true
     }, function (items) {
-        // console.log(`time change: ${items.timeChange}`)
-        temp = items.timeChange;
         if (items.timeChange) {
             var els = document.querySelectorAll("relative-time");
-            // console.log(`els lenght: ${els.length}`)
             els.forEach(function (el) {
                 el.innerHTML = `<span class="text-small">on ${dateFormat('yyyy/MM/dd HH:mm:ss Z', new Date(el.getAttribute("datetime")))}</span>`; // set original timestamp
                 //el.disconnectedCallback(); // stop auto-updates

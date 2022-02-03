@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "MyOwnExtension",
-    "version": "1.5",
-    "description": "添加百度搜索的右键菜单, GitHub Readme TOC / Relative time -> ISO time",
+    "version": "1.6",
+    "description": "添加百度搜索的右键菜单, GitHub Readme TOC / Relative time -> ISO time, JD手机界面转化为pc页面",
     "permissions": [
         "contextMenus",
         "webNavigation",
@@ -32,6 +32,15 @@
             ],
             "matches": [
                 "*://*.github.com/*"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "js": [
+                "src/jd_mobile2pc.js"
+            ],
+            "matches": [
+                "*://*.jd.com/*"
             ]
         }
     ]
