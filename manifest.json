@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "MyOwnExtension",
-    "version": "1.6",
-    "description": "添加百度搜索的右键菜单, GitHub Readme TOC / Relative time -> ISO time, JD手机界面转化为pc页面",
+    "version": "1.7",
+    "description": "添加百度搜索的右键菜单, GitHub Readme TOC / Relative time -> ISO time, JD手机界面转化为pc页面, 删除一些url param追踪",
     "permissions": [
         "contextMenus",
         "webNavigation",
@@ -37,10 +37,13 @@
         {
             "run_at": "document_start",
             "js": [
-                "src/jd_mobile2pc.js"
+                "src/emarket_urlelement_remove.js"
             ],
             "matches": [
-                "*://*.jd.com/*"
+                "*://*.jd.com/*",
+                "*://item.taobao.com/*",
+                "*://detail.tmall.com/*",
+                "*://*.bilibili.com/*"
             ]
         }
     ]
