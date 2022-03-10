@@ -5,6 +5,8 @@ Chrome Extension
 
 - search by baidu
 - github.com hover TOC
+- change mobile JD url to PC
+- remove some tracking by url param
 
 #### Thanks
 
