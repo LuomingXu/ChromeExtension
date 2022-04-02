@@ -40,6 +40,10 @@ if (current_href.includes("item.m.jd.com")) {
     }
 
     new_href = url.toString()
+} else if (url.host === "img30.360buyimg.com") {
+    const reg = /\d+x\d+/
+    url.pathname = url.pathname.replace(reg, "2000x2000")
+    new_href = url.toString()
 }
 
 replace_url(current_href, new_href)

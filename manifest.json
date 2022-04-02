@@ -43,7 +43,8 @@
                 "*://*.jd.com/*",
                 "*://item.taobao.com/*",
                 "*://detail.tmall.com/*",
-                "*://*.bilibili.com/*"
+                "*://*.bilibili.com/*",
+                "*://img30.360buyimg.com/*"
             ]
         }
     ]
