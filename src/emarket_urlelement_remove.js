@@ -35,6 +35,13 @@ if (current_href.includes("item.m.jd.com")) {
         for (var item of keys) {
             url.searchParams.delete(item)
         }
+    } else if (url.host === "live.bilibili.com") {
+        const params = ["session_id", "visit_id", "spm_id_from", "hotRank", "broadcast_type", "is_room_feed"]
+        for (var item of keys) {
+            if (params.includes(item)) {
+                url.searchParams.delete(item)
+            }
+        }
     } else {
         url.searchParams.delete("spm_id_from")
     }
