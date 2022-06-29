@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "MyOwnExtension",
-    "version": "1.7",
+    "version": "1.8",
     "description": "添加百度搜索的右键菜单, GitHub Readme TOC / Relative time -> ISO time, JD手机界面转化为pc页面, 删除一些url param追踪",
     "permissions": [
         "contextMenus",
@@ -44,7 +44,8 @@
                 "*://item.taobao.com/*",
                 "*://detail.tmall.com/*",
                 "*://*.bilibili.com/*",
-                "*://img30.360buyimg.com/*"
+                "*://img30.360buyimg.com/*",
+                "*://*.m.wikipedia.org/*"
             ]
         }
     ]

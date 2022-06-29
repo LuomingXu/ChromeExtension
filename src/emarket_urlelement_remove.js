@@ -2,7 +2,7 @@ var current_href = window.location.href;
 var new_href = current_href;
 var url = new URL(current_href)
 var keys = Array.from(url.searchParams.keys())
-
+console.log(url)
 function replace_url(current_href, new_href) {
     if (current_href !== new_href)
         window.location.replace(new_href)
@@ -51,6 +51,12 @@ if (current_href.includes("item.m.jd.com")) {
     const reg = /\d+x\d+/
     url.pathname = url.pathname.replace(reg, "2000x2000")
     new_href = url.toString()
+} else if (url.host.endsWith("wikipedia.org")) {
+    if (url.host.endsWith("m.wikipedia.org"))
+        url.host = url.host.replace("m.wikipedia.org", "wikipedia.org");
+    if (url.pathname.startsWith("/zh-hant"))
+        url.pathname = url.pathname.replace("zh-hant", "zh-hans")
+    new_href = url.toString();
 }
-
+console.log(new_href)
 replace_url(current_href, new_href)
