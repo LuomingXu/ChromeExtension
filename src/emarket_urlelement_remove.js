@@ -56,7 +56,18 @@ if (current_href.includes("item.m.jd.com")) {
         url.host = url.host.replace("m.wikipedia.org", "wikipedia.org");
     if (url.pathname.startsWith("/zh-hant"))
         url.pathname = url.pathname.replace("zh-hant", "zh-hans")
+    else if (url.pathname.startsWith("/zh-tw"))
+        url.pathname = url.pathname.replace("zh-tw", "zh-hans")
     new_href = url.toString();
+} else if (url.host.endsWith("sinaimg.cn")) {
+    if (!url.pathname.startsWith("/mw690")) {
+        var paths = url.pathname.split("/")
+        paths[1] = "mw690"
+        url.pathname = paths.join("/")
+    }
+    new_href = url.toString()
+} else if (url.host === "link.zhihu.com") {
+    new_href = url.searchParams.get("target").replace("%3A", ":")
 }
 console.log(new_href)
 replace_url(current_href, new_href)

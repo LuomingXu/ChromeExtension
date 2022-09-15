@@ -45,7 +45,9 @@
                 "*://detail.tmall.com/*",
                 "*://*.bilibili.com/*",
                 "*://img30.360buyimg.com/*",
-                "*://*.m.wikipedia.org/*"
+                "*://*.wikipedia.org/*",
+                "*://*.sinaimg.cn/*",
+                "*://link.zhihu.com/*"
             ]
         }
     ]
