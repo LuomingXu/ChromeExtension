@@ -54,10 +54,8 @@ if (current_href.includes("item.m.jd.com")) {
 } else if (url.host.endsWith("wikipedia.org")) {
     if (url.host.endsWith("m.wikipedia.org"))
         url.host = url.host.replace("m.wikipedia.org", "wikipedia.org");
-    if (url.pathname.startsWith("/zh-hant"))
-        url.pathname = url.pathname.replace("zh-hant", "zh-hans")
-    else if (url.pathname.startsWith("/zh-tw"))
-        url.pathname = url.pathname.replace("zh-tw", "zh-hans")
+    if (url.pathname.startsWith("/zh-"))
+        url.pathname = url.pathname.replace(/zh-.*\//, "zh-cn/")
     new_href = url.toString();
 } else if (url.host.endsWith("sinaimg.cn")) {
     if (!url.pathname.startsWith("/mw690")) {
