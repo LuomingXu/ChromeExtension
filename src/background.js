@@ -179,6 +179,10 @@ chrome.contextMenus.onClicked.addListener(
             }
         }
 
+        if (txt.startsWith("BV")) {
+            url = `https://www.bilibili.com/${txt}`
+        }
+
         chrome.tabs.create({
             url: url
         });

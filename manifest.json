@@ -6,7 +6,9 @@
     "permissions": [
         "contextMenus",
         "webNavigation",
-        "storage"
+        "storage",
+        "webRequest",
+        "declarativeNetRequest"
     ],
     "background": {
         "service_worker": "src/background.js"

@@ -12,6 +12,9 @@ if (current_href.includes("item.m.jd.com")) {
     // https://item.m.jd.com/product/31815069118.html
     new_href = current_href.replace("m.", "")
     new_href = new_href.replace("/product", "")
+    for (var item of keys) {
+        url.searchParams.delete(item)
+    }
 } else if (current_href.includes("item.taobao.com") || current_href.includes("detail.tmall.com")) {
     // remove taobao useless params
     for (var item of keys) {
@@ -25,6 +28,8 @@ if (current_href.includes("item.m.jd.com")) {
     || current_href.includes("https://www.bilibili.com/video/av")
     || url.host === "item.jd.com") {
     for (var item of keys) {
+        if (item == "t")
+            continue
         url.searchParams.delete(item)
     }
     url.hash = ""
@@ -55,12 +60,12 @@ if (current_href.includes("item.m.jd.com")) {
     if (url.host.endsWith("m.wikipedia.org"))
         url.host = url.host.replace("m.wikipedia.org", "wikipedia.org");
     if (url.pathname.startsWith("/zh-"))
-        url.pathname = url.pathname.replace(/zh-.*\//, "zh-cn/")
+        url.pathname = url.pathname.replace(/zh-.*?\//, "zh-cn/")
     new_href = url.toString();
 } else if (url.host.endsWith("sinaimg.cn")) {
     if (!url.pathname.startsWith("/mw690")) {
         var paths = url.pathname.split("/")
-        paths[1] = "mw690"
+        paths[1] = "mw2000"
         url.pathname = paths.join("/")
     }
     new_href = url.toString()
