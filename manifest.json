@@ -49,7 +49,8 @@
                 "*://img30.360buyimg.com/*",
                 "*://*.wikipedia.org/*",
                 "*://*.sinaimg.cn/*",
-                "*://link.zhihu.com/*"
+                "*://link.zhihu.com/*",
+                "*://*.tieba.baidu.com/*"
             ]
         }
     ]
