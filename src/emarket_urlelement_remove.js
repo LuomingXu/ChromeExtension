@@ -24,9 +24,7 @@ if (current_href.includes("item.m.jd.com")) {
     url.hash = ""
 
     new_href = url.toString()
-} else if (current_href.includes("https://www.bilibili.com/video/BV")
-    || current_href.includes("https://www.bilibili.com/video/av")
-    || url.host === "item.jd.com") {
+} else if (url.host === "item.jd.com") {
     for (var item of keys) {
         if (item == "t")
             continue
@@ -38,6 +36,8 @@ if (current_href.includes("item.m.jd.com")) {
     if (current_href.includes("https://www.bilibili.com/video/BV")
         || current_href.includes("https://www.bilibili.com/video/av")) {
         for (var item of keys) {
+            if (item == "p")
+                continue
             url.searchParams.delete(item)
         }
     } else if (url.host === "live.bilibili.com") {
