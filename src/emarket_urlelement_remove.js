@@ -75,6 +75,8 @@ if (current_href.includes("item.m.jd.com")) {
     url.host = "tieba.baidu.com"
     url.pathname = url.pathname.replace("/good", "")
     new_href = url.toString()
+} else if (url.host === "pro.m.jd.com") {
+    new_href = current_href.replace("m.", "")
 }
 console.log(new_href)
 replace_url(current_href, new_href)
