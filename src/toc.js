@@ -16,28 +16,19 @@ var getLinks = function () {
     var headers = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6');
     var links = [];
 
+    var baseUrl = headers[0].baseURI.split("#")[0]
     for (var i = 0; i < headers.length; ++i) {
         header = headers[i];
         tag = header.tagName;
         headerLevelStr = tag.substring(1);
         depth = Number.parseInt(headerLevelStr);
+        eleHerf = header.nextElementSibling.href.split("#").pop() // 取最后一个元素
 
-        if (typeof header.children[0] !== 'undefined') {
-            var hash = undefined;
-            for (var j = 0; j < header.children.length; ++j) {
-                var child = header.children[j];
-                hash = child.hash;
-                if (hash != undefined && hash != '') {
-                    break;
-                }
-            }
-
-            links.push({
-                text: header.innerText,
-                hash: hash,
-                depth: depth
-            });
-        }
+        links.push({
+            text: header.innerText,
+            hash: `${baseUrl}#${eleHerf}`,
+            depth: depth
+        });
     }
 
     return links;
