@@ -47,7 +47,10 @@ if (current_href.includes("item.m.jd.com")) {
                 url.searchParams.delete(item)
             }
         }
-    } else {
+    } else if (current_href.includes("linkfilter")) {
+         // http://game.bilibili.com/linkfilter/?url=https://dspcalculator.github.io/dsp-calc/
+        url = new URL(url.searchParams.get("url"))
+    }     else {
         url.searchParams.delete("spm_id_from")
     }
 
@@ -77,6 +80,21 @@ if (current_href.includes("item.m.jd.com")) {
     new_href = url.toString()
 } else if (url.host === "pro.m.jd.com") {
     new_href = current_href.replace("m.", "")
+} else if (url.host === "m.weibo.cn") {
+    // https://m.weibo.cn/u/5271269026
+    new_href = current_href.replace("m.", "")
+    new_href = new_href.replace(".cn", ".com")
+    new_href = new_href.replace("/u/", "/")
+} else if (url.host === "m.thepaper.cn") {
+    // https://m.thepaper.cn/kuaibao_detail.jsp?contid=25347899&from=kuaibao
+    // https://www.thepaper.cn/newsDetail_forward_25347899
+    if (url.pathname.includes("newsDetail_forward")) {
+        url.host = "www.thepaper.cn"
+        new_href = url.href
+    } else {
+        cont_id = url.searchParams.get("contid")
+        new_href = `https://www.thepaper.cn/newsDetail_forward_${cont_id}`
+    }
 }
 console.log(new_href)
 replace_url(current_href, new_href)

@@ -50,7 +50,9 @@
                 "*://*.wikipedia.org/*",
                 "*://*.sinaimg.cn/*",
                 "*://link.zhihu.com/*",
-                "*://*.tieba.baidu.com/*"
+                "*://*.tieba.baidu.com/*",
+                "*://*.weibo.cn/*",
+                "*://m.thepaper.cn/*"
             ]
         }
     ]
