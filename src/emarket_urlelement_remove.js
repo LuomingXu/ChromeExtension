@@ -18,13 +18,13 @@ if (current_href.includes("item.m.jd.com")) {
 } else if (current_href.includes("item.taobao.com") || current_href.includes("detail.tmall.com")) {
     // remove taobao useless params
     for (var item of keys) {
-        if (item !== "id")
+        if (["id","mi_id"].includes(item))
             url.searchParams.delete(item)
     }
     url.hash = ""
 
     new_href = url.toString()
-} else if (url.host === "item.jd.com") {
+} /* else if (url.host === "item.jd.com") {
     for (var item of keys) {
         if (item == "t")
             continue
@@ -32,7 +32,7 @@ if (current_href.includes("item.m.jd.com")) {
     }
     url.hash = ""
     new_href = url.toString()
-} else if (url.host.endsWith("bilibili.com")) {
+} */ else if (url.host.endsWith("bilibili.com")) {
     if (current_href.includes("https://www.bilibili.com/video/BV")
         || current_href.includes("https://www.bilibili.com/video/av")) {
         for (var item of keys) {
