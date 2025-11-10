@@ -18,7 +18,7 @@ if (current_href.includes("item.m.jd.com")) {
 } else if (current_href.includes("item.taobao.com") || current_href.includes("detail.tmall.com")) {
     // remove taobao useless params
     for (var item of keys) {
-        if (["id","mi_id"].includes(item))
+        if (!["id","mi_id"].includes(item))
             url.searchParams.delete(item)
     }
     url.hash = ""
