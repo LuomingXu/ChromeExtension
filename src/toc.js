@@ -179,6 +179,7 @@ var pinTocToRightPane = function (toc, section, referenceRow) {
     toc.style.top = calculatedTop + 'px';
     toc.style.left = rect.left + 'px';
     toc.style.width = rect.width + 'px';
+    toc.style.bottom = "50px";
     toc.style.zIndex = '30';
 };
 
