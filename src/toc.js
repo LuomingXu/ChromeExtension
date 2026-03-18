@@ -209,34 +209,35 @@ var insertAfterLastBorderGridRow = function (section, toc) {
 };
 
 var tocDebounceTimer = null;
-var sidebarObserver = null;
+var globalObserver = null;
 
-function doFunc_toc(retryCount) {
+function doFunc_toc() {
     if (tocDebounceTimer) {
         clearTimeout(tocDebounceTimer);
     }
 
     tocDebounceTimer = setTimeout(function() {
-        executeTocLogic(retryCount);
-    }, 100);
+        executeTocLogic();
+    }, 250);
 }
 
-function executeTocLogic(retryCount) {
-    var attempt = typeof retryCount === 'number' ? retryCount : 0;
-    
+function executeTocLogic() {
     var section = getSidebarContainer();
     var links = getLinks();
 
     if (!section || !links || links.length === 0) {
-        if (attempt < 15) {
-            window.setTimeout(function () {
-                executeTocLogic(attempt + 1);
-            }, 300);
-        }
         return;
     }
 
-    // Only remove if we actually have new links to show, to avoid flickering
+    // Performance optimization: if TOC already exists and links count is same, skip re-render
+    var existingToc = document.querySelector('.toc[data-myownext="true"]');
+    if (existingToc && section.contains(existingToc)) {
+        var existingLinksCount = existingToc.querySelectorAll('li').length;
+        if (existingLinksCount === links.length) {
+            return;
+        }
+    }
+
     removeOldToc();
 
     var toc = document.createElement('div');
@@ -277,24 +278,26 @@ function executeTocLogic(retryCount) {
             }
         });
     }
+}
 
-    // Setup MutationObserver to watch for sidebar changes (GitHub PJAX/Turbo often replaces parts of the DOM)
-    if (sidebarObserver) {
-        sidebarObserver.disconnect();
-    }
-    
-    sidebarObserver = new MutationObserver(function(mutations) {
-        var stillExists = document.querySelector('.toc[data-myownext="true"]');
-        if (!stillExists) {
-            // If it's gone, try to re-run the logic
-            doFunc_toc(0);
-        }
+function initGlobalObserver() {
+    if (globalObserver) return;
+
+    globalObserver = new MutationObserver(function(mutations) {
+        doFunc_toc();
     });
 
-    sidebarObserver.observe(section.parentNode || document.body, {
+    globalObserver.observe(document.body, {
         childList: true,
         subtree: true
     });
 }
 
+// GitHub Turbo/PJAX events support
+if (window.addEventListener) {
+    window.addEventListener('turbo:load', doFunc_toc);
+    window.addEventListener('turbo:render', doFunc_toc);
+}
+
+initGlobalObserver();
 doFunc_toc();
