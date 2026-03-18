@@ -208,21 +208,36 @@ var insertAfterLastBorderGridRow = function (section, toc) {
     return null;
 };
 
-function doFunc_toc(retryCount) {
-    var attempt = typeof retryCount === 'number' ? retryCount : 0;
-    removeOldToc();
+var tocDebounceTimer = null;
+var sidebarObserver = null;
 
+function doFunc_toc(retryCount) {
+    if (tocDebounceTimer) {
+        clearTimeout(tocDebounceTimer);
+    }
+
+    tocDebounceTimer = setTimeout(function() {
+        executeTocLogic(retryCount);
+    }, 100);
+}
+
+function executeTocLogic(retryCount) {
+    var attempt = typeof retryCount === 'number' ? retryCount : 0;
+    
     var section = getSidebarContainer();
     var links = getLinks();
 
     if (!section || !links || links.length === 0) {
-        if (attempt < 12) {
+        if (attempt < 15) {
             window.setTimeout(function () {
-                doFunc_toc(attempt + 1);
-            }, 250);
+                executeTocLogic(attempt + 1);
+            }, 300);
         }
         return;
     }
+
+    // Only remove if we actually have new links to show, to avoid flickering
+    removeOldToc();
 
     var toc = document.createElement('div');
     toc.className = 'toc toc__row';
@@ -233,6 +248,7 @@ function doFunc_toc(retryCount) {
     toc.innerHTML = "<div class='Box-header toc__header'><h2 class='Box-title toc_title'>Table Of Contents</h2></div>" + buildContents(links);
     toc.setAttribute('data-fixed-top', String(calculateTopFromReferenceRow(referenceRow)));
     pinTocToRightPane(toc, section, referenceRow);
+
     addEvent(window, 'resize', function () {
         toc.setAttribute('data-fixed-top', String(calculateTopFromReferenceRow(referenceRow)));
         pinTocToRightPane(toc, section, referenceRow);
@@ -242,26 +258,42 @@ function doFunc_toc(retryCount) {
     });
 
     var toc_ul = toc.getElementsByClassName('toc__ul')[0];
-    if (!toc_ul) {
-        return;
+    if (toc_ul) {
+        var scrollKey = getTocScrollKey();
+        var savedScrollTop = window.localStorage.getItem(scrollKey);
+        if (savedScrollTop !== null) {
+            toc_ul.scrollTop = Number(savedScrollTop);
+        }
+
+        addEvent(toc_ul, 'scroll', function () {
+            window.localStorage.setItem(scrollKey, String(toc_ul.scrollTop));
+        });
+
+        addEvent(toc_ul, 'click', function (e) {
+            var target = e.target;
+            if (target && target.closest && target.closest('a')) {
+                var currentTop = toc_ul.scrollTop;
+                window.localStorage.setItem(scrollKey, String(currentTop));
+            }
+        });
     }
 
-    var scrollKey = getTocScrollKey();
-    var savedScrollTop = window.localStorage.getItem(scrollKey);
-    if (savedScrollTop !== null) {
-        toc_ul.scrollTop = Number(savedScrollTop);
+    // Setup MutationObserver to watch for sidebar changes (GitHub PJAX/Turbo often replaces parts of the DOM)
+    if (sidebarObserver) {
+        sidebarObserver.disconnect();
     }
-
-    addEvent(toc_ul, 'scroll', function () {
-        window.localStorage.setItem(scrollKey, String(toc_ul.scrollTop));
+    
+    sidebarObserver = new MutationObserver(function(mutations) {
+        var stillExists = document.querySelector('.toc[data-myownext="true"]');
+        if (!stillExists) {
+            // If it's gone, try to re-run the logic
+            doFunc_toc(0);
+        }
     });
 
-    addEvent(toc_ul, 'click', function (e) {
-        var target = e.target;
-        if (target && target.closest && target.closest('a')) {
-            var currentTop = toc_ul.scrollTop;
-            window.localStorage.setItem(scrollKey, String(currentTop));
-        }
+    sidebarObserver.observe(section.parentNode || document.body, {
+        childList: true,
+        subtree: true
     });
 }
 
