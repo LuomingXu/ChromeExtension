@@ -222,6 +222,10 @@ function doFunc_toc() {
 }
 
 function executeTocLogic() {
+    if (window.location.pathname.split('/')[3] === 'wiki') {
+        return; // 发现是 wiki 路径直接退出
+    }
+
     var section = getSidebarContainer();
     var links = getLinks();
 
