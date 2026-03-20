@@ -162,10 +162,16 @@ const top_domain = [".aaa", ".aarp", ".abarth", ".abb", ".abbott", ".abbvie", ".
     ".yoga", ".yokohama", ".you", ".youtube", ".yt", ".yun", ".za", ".zappos", ".zara", ".zero", ".zip",
     ".zm", ".zone", ".zuerich", ".zw"]
 
-chrome.contextMenus.create({
-    id: "Search By Baidu/Google",
-    title: 'Search "%s" by Baidu/Google',
-    contexts: ['selection'],
+function createSearchMenu() {
+    chrome.contextMenus.create({
+        id: "Search By Baidu/Google",
+        title: 'Search "%s" by Baidu/Google',
+        contexts: ['selection'],
+    });
+}
+
+chrome.runtime.onInstalled.addListener(function () {
+    createSearchMenu();
 });
 
 chrome.contextMenus.onClicked.addListener(
@@ -188,14 +194,3 @@ chrome.contextMenus.onClicked.addListener(
         });
     }
 )
-
-chrome.webNavigation.onHistoryStateUpdated.addListener(
-    function (details) {
-        chrome.tabs.sendMessage(details.tabId, {
-            code: 'github',
-            tabId: details.tabId,
-            url: details.url,
-            event: 'onHistoryStateUpdated'
-        })
-    }, { url: [{ hostSuffix: 'github.com' }] }
-);

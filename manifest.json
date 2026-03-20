@@ -1,11 +1,10 @@
 {
     "manifest_version": 3,
     "name": "MyOwnExtension",
-    "version": "1.9.2",
+    "version": "1.9.3",
     "description": "添加百度搜索的右键菜单, GitHub Readme TOC / Relative time -> ISO time, JD手机界面转化为pc页面, 删除一些url param追踪",
     "permissions": [
         "contextMenus",
-        "webNavigation",
         "storage",
         "webRequest",
         "declarativeNetRequest"
@@ -29,8 +28,7 @@
             ],
             "js": [
                 "src/toc.js",
-                "src/timeChange.js",
-                "src/msgListener.js"
+                "src/timeChange.js"
             ],
             "matches": [
                 "*://*.github.com/*/*"
